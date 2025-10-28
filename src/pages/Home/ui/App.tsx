@@ -10,6 +10,7 @@ import {
 } from '@/shared/api/types/Filter'
 import type { SearchRequestFilter } from '@/shared/api/types/SearchRequest/SearchRequestFilter'
 import { useFilterStore } from '@/shared/store/filterStore'
+import filterData from '@/shared/temp/filterData.json'
 
 export const App = () => {
 	const { t } = useTranslation('filter')
@@ -26,13 +27,7 @@ export const App = () => {
 
 	const { data } = useQuery({
 		queryKey: ['filterData'],
-		queryFn: async () => {
-			const res = await fetch('/src/shared/temp/filterData.json')
-			if (!res.ok) {
-				throw new Error('Failed to fetch filter data')
-			}
-			return res.json()
-		}
+		queryFn: async () => filterData as { filterItems: FilterItem[] }
 	})
 
 	// temporary state
