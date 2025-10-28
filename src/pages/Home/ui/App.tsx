@@ -3,7 +3,11 @@ import { useTranslation } from 'react-i18next'
 
 import { useQuery } from '@tanstack/react-query'
 
-import type { FilterChooseOption, FilterItem } from '@/shared/api/types/Filter'
+import {
+	FilterChooseOption,
+	FilterItem,
+	FilterType
+} from '@/shared/api/types/Filter'
 import type { SearchRequestFilter } from '@/shared/api/types/SearchRequest/SearchRequestFilter'
 import { useFilterStore } from '@/shared/store/filterStore'
 
