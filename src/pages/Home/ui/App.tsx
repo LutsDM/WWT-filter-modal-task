@@ -14,6 +14,7 @@ import filterData from '@/shared/temp/filterData.json'
 
 export const App = () => {
 	const { t } = useTranslation('filter')
+
 	const {
 		selectedFilters,
 		lastAppliedFilters,
