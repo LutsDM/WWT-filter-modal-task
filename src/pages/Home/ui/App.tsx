@@ -1,95 +1,57 @@
-import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { useQuery } from '@tanstack/react-query'
 
-import {
-	FilterChooseOption,
-	FilterItem,
-	FilterType
-} from '@/shared/api/types/Filter'
-import type { SearchRequestFilter } from '@/shared/api/types/SearchRequest/SearchRequestFilter'
-import { useFilterStore } from '@/shared/store/filterStore'
-import filterData from '@/shared/temp/filterData.json'
+import { FilterChooseOption, FilterItem } from '@/shared/api/types/Filter'
+
+import { useFilterLogic } from './useFilterLogic'
 
 export const App = () => {
 	const { t } = useTranslation('filter')
 
 	const {
-		selectedFilters,
-		lastAppliedFilters,
-		setSelectedFilters,
-		resetFilters
-	} = useFilterStore()
+		tempFilters,
+		isOpen,
+		isConfirmOpen,
+		openFilters,
+		handleToggle,
+		handleApplyClick,
+		handleApplyNew,
+		handleUseOld,
+		handleClearAll,
+		setIsOpen,
+		selectedFilters
+	} = useFilterLogic()
 
-	const [tempFilters, setTempFilters] = useState<SearchRequestFilter>([])
-	const [isOpen, setIsOpen] = useState(false)
-	const [isConfirmOpen, setIsConfirmOpen] = useState(false)
-
-	const { data } = useQuery({
+	const { data, isLoading, isError, error } = useQuery<{
+		filterItems: FilterItem[]
+	}>({
 		queryKey: ['filterData'],
-		queryFn: async () => filterData as { filterItems: FilterItem[] }
+		queryFn: async () => {
+			const res = await fetch('/src/shared/temp/filterData.json')
+			if (!res.ok) {
+				throw new Error('Failed to fetch filter data')
+				return res.json()
+			}
+		},
+		staleTime: 5 * 60 * 1000,
+		refetchOnWindowFocus: false
 	})
 
-	// temporary state
-	const handleToggle = (filterId: string, optionId: string) => {
-		const updated = [...tempFilters]
-		const target = updated.find(filter => filter.id === filterId)
-
-		if (target) {
-			if (target.optionsIds.includes(optionId)) {
-				target.optionsIds = target.optionsIds.filter(id => id !== optionId)
-				if (target.optionsIds.length === 0) {
-					const index = updated.indexOf(target)
-					updated.splice(index, 1)
-				}
-			} else {
-				target.optionsIds.push(optionId)
-			}
-		} else {
-			updated.push({
-				id: filterId,
-				type: FilterType.OPTION,
-				optionsIds: [optionId]
-			})
-		}
-
-		setTempFilters(updated)
-	}
-
-	// Deep copy filters to avoid direct store mutation
-	const openFilters = () => {
-		const deepCopy = lastAppliedFilters.map(filter => ({
-			...filter,
-			optionsIds: [...filter.optionsIds]
-		}))
-		setTempFilters(deepCopy)
-		setIsOpen(true)
-	}
-
-	const handleApplyClick = () => {
-		setIsConfirmOpen(true)
-	}
-
-	const handleApplyNew = () => {
-		// Safety check: keep only filters with selected options (should already be clean)
-		const filteredTempFilters = tempFilters.filter(
-			filter => filter.optionsIds && filter.optionsIds.length > 0
+	if (isLoading) {
+		return (
+			<div className="flex items-center justify-center min-h-screen">
+				<div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-600"></div>
+			</div>
 		)
-		setSelectedFilters(filteredTempFilters, true)
-		setIsConfirmOpen(false)
-		setIsOpen(false)
 	}
 
-	const handleUseOld = () => {
-		setSelectedFilters(lastAppliedFilters, false)
-		setIsConfirmOpen(false)
-		setIsOpen(false)
-	}
-
-	const handleClearAll = () => {
-		resetFilters()
-		setTempFilters([])
+	if (isError) {
+		return (
+			<div className="text-red-600 font-medium">
+				{t('error')}: {error.message}
+			</div>
+		)
 	}
 
 	//------------------user-friendly display section-----------------------//
@@ -112,7 +74,6 @@ export const App = () => {
 		)
 		return option?.name || optionId
 	}
-
 	return (
 		<main
 			className="flex flex-col items-center justify-center min-h-screen p-6 gap-8 bg-cover bg-center bg-no-repeat"
