@@ -36,7 +36,7 @@ export const FilterModal = React.memo(
 						<h2 className="text-2xl font-medium">{t('modalTitle')}</h2>
 						<button
 							onClick={() => setIsOpen(false)}
-							className="text-black absolute right-0 text-2xl leading-none"
+							className=" icon-btn text-black absolute right-0 text-2xl leading-none"
 						>
 							×
 						</button>
@@ -78,14 +78,14 @@ export const FilterModal = React.memo(
 					{/* Bottom panel with Apply and Clear buttons */}
 					<div className="relative flex items-center justify-center w-full mt-8 border-t-2 border-[#B4B4B4] pt-4">
 						<button
-							className="bg-[#FF5F00] hover:bg-orange-600 text-white text-xs text-center px-12 py-3 rounded-xl"
+							className="btn btn-accent bg-[#FF5F00] hover:bg-orange-600 text-white text-xs text-center px-12 py-3 rounded-xl"
 							onClick={handleApplyClick}
 						>
 							{t('apply')}
 						</button>
 						<button
 							onClick={handleClearAll}
-							className="absolute right-0 text-sm text-[#078691] hover:text-[#0fb6c5] underline"
+							className=" btn btn-link absolute right-0 text-sm text-[#078691] hover:text-[#0fb6c5] underline"
 						>
 							{t('clearAllParameters')}
 						</button>

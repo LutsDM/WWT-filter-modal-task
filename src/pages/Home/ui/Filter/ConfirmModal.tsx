@@ -27,7 +27,7 @@ export const ConfirmModal = React.memo(
 						<h3 className="text-2xl font-semibold mb-6">{t('confirmTitle')}</h3>
 						<button
 							onClick={() => setIsOpen(false)}
-							className="text-black absolute right-0 text-2xl leading-none mb-6"
+							className="icon-btn text-black absolute right-0 text-2xl leading-none mb-6"
 						>
 							×
 						</button>
@@ -35,13 +35,13 @@ export const ConfirmModal = React.memo(
 
 					<div className="flex justify-center gap-4 mt-6">
 						<button
-							className="text-xs bg-white hover:bg-gray-200 border-1 border-gray-300 rounded-xl px-12 py-3"
+							className="btn btn-ghost text-xs bg-white hover:bg-gray-200 border-1 border-gray-300 rounded-xl px-12 py-3"
 							onClick={handleUseOld}
 						>
 							{t('useOldFilter')}
 						</button>
 						<button
-							className="bg-[#FF5F00] hover:bg-orange-600 text-white text-xs text-center px-12 py-3 rounded-xl"
+							className="btn btn-accent bg-[#FF5F00] hover:bg-orange-600 text-white text-xs text-center px-12 py-3 rounded-xl"
 							onClick={handleApplyNew}
 						>
 							{t('applyNewFilter')}

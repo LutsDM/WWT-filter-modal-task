@@ -100,7 +100,7 @@ export const App = () => {
 			{/* Modal button */}
 			<button
 				onClick={openFilters}
-				className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium cursor-pointer"
+				className="btn btn-primary bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium cursor-pointer"
 			>
 				{t('openFilters')}
 			</button>
