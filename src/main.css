@@ -1,24 +1,23 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
 @import 'tailwindcss';
 @import 'tw-animate-css';
-@import "tailwindcss/preflight";
-@import "tailwindcss/utilities";
+@import 'tailwindcss/preflight';
+@import 'tailwindcss/utilities';
 
 @layer components {
-  .btn {
-    @apply inline-flex items-center justify-center rounded-lg font-medium cursor-pointer
+	.btn {
+		@apply inline-flex items-center justify-center rounded-lg font-medium cursor-pointer
            focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
-  }
+	}
 
-  .btn-primary {
-    @apply bg-blue-600 text-white hover:bg-blue-700 focus-visible:ring-blue-600;
-  }
+	.btn-primary {
+		@apply bg-blue-600 text-white hover:bg-blue-700 focus-visible:ring-blue-600;
+	}
 
-  .btn-accent {
-    @apply bg-[#FF5F00] text-white hover:bg-orange-600 focus-visible:ring-orange-600;
-  }
+	.btn-accent {
+		@apply bg-[#FF5F00] text-white hover:bg-orange-600 focus-visible:ring-orange-600;
+	}
 }
-
 
 body {
 	font-family: 'Inter', sans-serif;
