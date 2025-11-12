@@ -31,7 +31,7 @@ export const App = () => {
 	}>({
 		queryKey: ['filterData'],
 		queryFn: async () => {
-			const res = await fetch('/src/shared/temp/filterData.json')
+			const res = await fetch('/filterData.json')
 			if (!res.ok) {
 				throw new Error('Failed to fetch filter data')
 			}
